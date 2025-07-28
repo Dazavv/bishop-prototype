@@ -8,7 +8,9 @@ import org.example.starter.command.model.Command;
 import org.example.starter.command.model.CommandPriority;
 import org.example.starter.command.service.executors.CommandQueueService;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
+
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class CommandService {
         newCommand.setDescription(commandType.getDescription());
         newCommand.setPriority(choosePriority(authorType));
         newCommand.setAuthor(authorType.getDescription());
-        newCommand.setTime(String.valueOf(LocalDateTime.now()));
+        newCommand.setTime(DateTimeFormatter.ISO_INSTANT.format(Instant.now()));
 
         commandQueueService.processCommand(newCommand);
     }
